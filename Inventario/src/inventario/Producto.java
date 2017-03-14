@@ -4,48 +4,73 @@
  * and open the template in the editor.
  */
 package inventario;
+
 import java.io.*;
 
 /**
- * @author Maria cecilia Aburto Villalobos 
- * Version 1.0 
+ * @author Maria cecilia Aburto Villalobos Version 1.0
  */
-public class Producto implements Serializable{
+public class Producto implements Serializable {
+
   private String nombre;
   private String descripcion;
-  private int clave=0;
+  private int clave = 0;
   private double precioCompra;
   private double precioVenta;
   private double precioIVA;
+  private double precioTotal;
+  private double precioTotalVendido;
   private String tipoUnidad;
   private int existencia;
-/**
- * Se inicializan las variables de producto
- */
-  public Producto(){
-    nombre=" ";
-    descripcion=" ";
+  private int ventaProducto=0;
+
+  /**
+   * Se inicializan las variables de producto
+   */
+  public Producto() {
+    nombre = " ";
+    descripcion = " ";
+    clave=0;
+    precioCompra=0;
+    precioVenta=0;
+    precioIVA=0;
+    precioTotal=0;
+    precioTotalVendido=0;
+    tipoUnidad=" ";
+    existencia=0;
+    ventaProducto=0;
+    
   }
+
   /**
    * Se inicializan las variables de producto ahora ya con valor
    */
-  public Producto(int clave,String nombre, String descripcion,double precioCompra, int existencia,String tipoUnidad,double precioVenta,double precioIVA){
-    this.clave=clave;
-    this.nombre=nombre;
-    this.descripcion=descripcion;
-    this.precioCompra=precioCompra;
-    this.existencia=existencia;
-    this.tipoUnidad=tipoUnidad;
-    this.precioVenta=precioVenta;
-    this.precioIVA=precioIVA;
+  public Producto(int clave, String nombre, String descripcion, double precioCompra,
+      int existencia, String tipoUnidad, double precioVenta, double precioIVA, int ventaProducto, double precioTotal, double precioTotalVendido) {
+    this.clave = clave;
+    this.nombre = nombre;
+    this.descripcion = descripcion;
+    this.precioCompra = precioCompra;
+    this.existencia = existencia;
+    this.tipoUnidad = tipoUnidad;
+    this.precioVenta = precioVenta;
+    this.precioIVA = precioIVA;
+    this.ventaProducto=ventaProducto;
+    this.precioTotal=precioTotal;
+    this.precioTotalVendido=precioTotalVendido;
   }
+
+  public double getPrecioTotalVendido(){
+    return precioTotalVendido;
+  }
+  
   public String getNombre() {
     return nombre;
   }
-  
-  public double getPrecioCompra(){
-  return precioCompra;
-}
+
+  public double getPrecioCompra() {
+    return precioCompra;
+  }
 
   public String getDescripcion() {
     return descripcion;
@@ -54,61 +79,73 @@ public class Producto implements Serializable{
   public int getClave() {
     return clave;
   }
-  
-  public String getTipoUnidad(){
+
+  public String getTipoUnidad() {
     return tipoUnidad;
   }
-  
-  public double getPrecioventa(){
+
+  public double getPrecioventa() {
     return precioVenta;
   }
-  
-  public int getExistencia(){
+
+  public int getExistencia() {
     return existencia;
   }
-  
-  private double getPrecioIVA(){
+
+  public double getPrecioIVA() {
     return precioIVA;
   }
-  
-  public void setNombre(String nombre){
-    this.nombre=nombre;
+
+  public int getVentaProducto(){
+    return ventaProducto;
+  }
+  public void setNombre(String nombre) {
+    this.nombre = nombre;
+  }
+
+  public void setDescripcion(String descripcion) {
+    this.descripcion = descripcion;
+  }
+
+  public void setPrecioCompra(double precioCompra) {
+    this.precioCompra = precioCompra;
+  }
+
+  public void setExistencia(int existencia) {
+    this.existencia = existencia;
+  }
+
+  public void setTipoUnidad(String tipoUnidad) {
+    this.tipoUnidad = tipoUnidad;
+  }
+
+  public void setPrecioVenta(double precioVenta) {
+    this.precioVenta = precioVenta;
+  }
+
+  public void setPrecioIVA(double precioIVA) {
+    this.precioIVA = precioIVA;
+  }
+
+  public void setClave(int clave) {
+    this.clave = clave;
   }
   
-  public void setDescripcion(String descripcion){
-    this.descripcion=descripcion;
+  public void setVentaProducto(int ventaProducto){
+    this.ventaProducto=ventaProducto;
   }
   
-  public void setPrecioCompra(double precioCompra){
-    this.precioCompra=precioCompra;
+  public void setPrecioTotalVendido(double precioTotalVendido){
+    this.precioTotalVendido=precioTotalVendido;
   }
-  
-  public void setExistencia(int existencia){
-    this.existencia=existencia;
-  }
-  
-  public void setTipoUnidad(String tipoUnidad){
-    this.tipoUnidad=tipoUnidad;
-  }
-  
-  public void setPrecioVenta(double precioVenta){
-    this.precioVenta=precioVenta;
-  }
-  
-  public void setPrecioIVA(double precioIVA){
-    this.precioIVA=precioIVA;
-  }
-  public void setClave(int clave){
-    this.clave=clave;
-  }
-  
+
   /**
-   * Este metodo permite llamar todos los atributos en una sola funcion.
-   * El stringbuilder permite almacenarcaracteres de forma indexada (con un orden). 
+   * Este metodo permite llamar todos los atributos en una sola funcion. El stringbuilder permite
+   * almacenar caracteres de forma indexada (con un orden).
    */
   @Override
-  public String toString(){
-    StringBuilder sb=new StringBuilder(55);
+  public String toString() {
+    StringBuilder sb = new StringBuilder(55);
     sb.append("\n Clave: ");
     sb.append(this.getClave());
     sb.append("'\n Nombre: ");
@@ -126,5 +163,3 @@ public class Producto implements Serializable{
     return sb.toString();
   }
 }
-  
-

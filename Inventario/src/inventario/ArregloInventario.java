@@ -17,6 +17,7 @@ public class ArregloInventario {
 //El array se hizo estatico para que hubiera consistencia con la informacion asi como control de archivos
 
   public static ArrayList<Producto> p1 = new ArrayList<Producto>();
+  public static ArrayList<Producto> arrayVenta = new ArrayList<Producto>();
   private TecladoInventario t = new TecladoInventario();
   private Producto producto1 = new Producto();
   public static ControlArchivos arch = new ControlArchivos();
@@ -45,6 +46,7 @@ public class ArregloInventario {
       String tipo = t.leerString();
       t.lineaBlanco();
       p1.add(producto);
+      arrayVenta.add(producto);
       //Se asignan los atributos al producto
       producto.setNombre(nombre);
       producto.setDescripcion(descripcion);
@@ -56,8 +58,11 @@ public class ArregloInventario {
       double precioIVA = (producto.getPrecioventa() * 1.16);
       producto.setPrecioIVA(precioIVA);
       producto.setClave(clave);
+      int ventaProducto = 0;
+      producto.setVentaProducto(ventaProducto);
       //Se guarda en el texto
       guardarP();
+      guardarV();
       System.out.println("El producto ha sido guardado con exito.");
     } else {
       System.out.println("Lo siento. La clave ya esta registrada en otro producto. ");
@@ -246,6 +251,20 @@ public class ArregloInventario {
   }
 
   /**
+   * Este metodo mostrara el arreglo de ventas
+   */
+  public void imprimirArregloVenta() {
+    cargarV();
+    for (int i = 0; i < arrayVenta.size(); i++) {
+      System.out.println(arrayVenta.get(i));
+      System.out.println(" Cantidad de productos vendidos:");
+      System.out.println(" "+producto1.getVentaProducto());
+      System.out.println(" Total de ganancias es: ");
+      System.out.println("  "+producto1.getPrecioTotalVendido());
+    }
+  }
+
+  /**
    * Este metodo eliminara un objeto del array
    *
    * @param clave indicara la clave del objeto a eliminar
@@ -255,15 +274,78 @@ public class ArregloInventario {
       producto1 = p1.get(i);
       if (producto1.getClave() == clave) {
         p1.remove(i);
-        //ver si debo agregar otro array e ir guardando la informacion
-        //guardarP();
+
+        for (int j = 0; j < p1.size(); j++) {
+          guardarP();
+        }
         System.out.println("El producto ha sido eliminado con exito ");
-      } else {
-        System.out.println("La clave no esta en el inventario.");
-        break;
       }
     }
     imprimirArreglo();
+  }
+
+  /**
+   * Este metodo registrara la venta de un producto
+   *
+   * @param clave se introduce la clave del producto que se va a vender
+   */
+  public void registroVenta(int clave) {
+    for (int i = 0; i < p1.size(); i++) {
+      producto1 = p1.get(i);
+      if (producto1.getClave() == clave) {
+        System.out.println("Introduce la cantidad de productos a vender");
+        int cantidad = t.leerEntero();
+        if (cantidad <= 0) {
+          System.out.println("La cantidad de productos a vender no es válida");
+        } else if (cantidad > 0) {
+          if (cantidad <= producto1.getExistencia()) {
+            System.out.println("Comprobando venta de producto:");
+            System.out.println(p1.get(i));
+            System.out.println("Presiona 1 para confirmar o 2 para cancelar. ");
+            int opcion = t.leerEntero();
+            if (opcion == 1) {
+              int nuevaExistencia = (producto1.getExistencia() - cantidad);
+              producto1.setExistencia(nuevaExistencia);
+              producto1.setExistencia(producto1.getExistencia());
+              producto1.setVentaProducto(producto1.getVentaProducto() + cantidad);
+              double precioTotalVendido = (producto1.getPrecioIVA() * producto1.getVentaProducto());
+              producto1.setPrecioTotalVendido(precioTotalVendido);
+              guardarP();
+              guardarV();
+              System.out.println("Venta realizada con exito.");
+              System.out.println("Cantidad de productos: " + cantidad);
+              System.out.println("El precio con IVA ES: " + producto1.getPrecioIVA());
+              System.out.println("El total es:  ");
+              System.out.println(producto1.getPrecioIVA() * cantidad);
+            }
+          } else {
+            System.out.println("No hay suficientes productos en existencia.");
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   *
+   * Este metodo registra las ventas en el array de ventas
+   */
+  public void registroVentaArray(Producto p, int cantidad) {
+    cargarV();
+    cargarP();
+    p.setExistencia(p.getExistencia());
+    p.setVentaProducto(p.getVentaProducto() + cantidad);
+    double precioTotalVendido = (p.getPrecioIVA() * p.getVentaProducto());
+    p.setPrecioTotalVendido(precioTotalVendido);
+    guardarV();
+  }
+
+  /**
+   * Este metodo es para cargar los datos del array ventas se hizo estatico para evitar problemas de
+   * consistencia
+   */
+  public static void cargarV() {
+    arrayVenta = arch.recuperarVenta();
   }
 
   /**
@@ -272,6 +354,14 @@ public class ArregloInventario {
    */
   public static void cargarP() {
     p1 = arch.recuperarDatosP();
+  }
+
+  /**
+   * Este metodo es para guardar los datos del array ventas se hizo estatico para evitar problemas
+   * de consistencia
+   */
+  public static void guardarV() {
+    arch.guardarVenta();
   }
 
   /**

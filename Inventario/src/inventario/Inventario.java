@@ -23,10 +23,12 @@ public class Inventario {
     int op=0;
     do{
       a1.cargarP();
+      a1.cargarV();
       menu.menuUsuario();
       op=menu.leerOpcion();
       menu.realizarOpcion(op);
       a1.guardarP();
+      a1.guardarV();
     }while(op !=8);
   }
   

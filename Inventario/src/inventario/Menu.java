@@ -57,7 +57,14 @@ public class Menu {
         a.agregarProducto();
         break;
       case 2:
-        
+        a.imprimirArreglo();
+        System.out.println("Ingresa la clave del producto a vender.");
+        try{
+        num = t.leerEntero();
+        a.registroVenta(num);
+        }catch(InputMismatchException ex){
+          System.out.println("Elemento no valido.");
+        }
         break;
       case 3:
         System.out.println("Ingresa la clave del producto que deseas modificar: ");
@@ -113,22 +120,19 @@ public class Menu {
         }
         break;
       case 6:
-        a.imprimirArreglo();
+        a.imprimirArregloVenta();
         break;
       case 7:
         a.imprimirArreglo();
         System.out.println("Ingrese la clave del producto a eliminar. ");
-        try{
-          num=t.leerEntero();
+        try {
+          num = t.leerEntero();
           a.eliminarElemento(num);
-        }catch (InputMismatchException ex){
+        } catch (InputMismatchException ex) {
           System.out.println("Elemento no valido.");
         }
         break;
       case 8:
-
-        break;
-      case 9:
         break;
       default:
         System.out.println("El numero ingresado no es valido.Intentelo de nuevo.");
