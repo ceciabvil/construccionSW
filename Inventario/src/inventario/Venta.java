@@ -11,6 +11,6 @@ import java.util.*;
  * @author Maria Cecilia Aburto Villalobos 
  */
 public class Venta {
-  private Date fechaVenta;
+  private String fecha;
   
 }

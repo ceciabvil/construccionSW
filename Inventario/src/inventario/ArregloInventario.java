@@ -15,6 +15,7 @@ import java.io.*;
  */
 public class ArregloInventario {
 //El array se hizo estatico para que hubiera consistencia con la informacion asi como control de archivos
+
   public static ArrayList<Producto> p1 = new ArrayList<Producto>();
   private TecladoInventario t = new TecladoInventario();
   private Producto producto1 = new Producto();
@@ -92,11 +93,9 @@ public class ArregloInventario {
         realizarEdicion(numero);
         System.out.println(p1.get(i));
         System.out.println("El objeto ha sido modificado.");
-      }else{
-        System.out.println("La clave no se encuentra en el inventario.");
-        break;
       }
     }
+    System.out.println("No se ha encontrado la clave.");
   }
 
   /**
@@ -109,7 +108,7 @@ public class ArregloInventario {
     System.out.println("1) Nombre");
     System.out.println("2) Descripcion");
     System.out.println("3) Precio Compra");
-    System.out.println("4) Tipo unidad");
+    System.out.println("4) Existencia");
   }
 
   /**
@@ -158,13 +157,14 @@ public class ArregloInventario {
 
   /**
    * Este metodo es para buscar un producto por nombre.
+   *
    * @param nombre del producto a buscar
    */
   public void mostrarPorNombre(String nombre) {
     for (int i = 0; i < p1.size(); i++) {
       producto1 = p1.get(i);
       //Aqui se utiliza equals porqe es string
-      if (producto1.getNombre().equalsIgnoreCase(nombre) ) {
+      if (producto1.getNombre().equalsIgnoreCase(nombre)) {
         System.out.println(p1.get(i));
       }
     }
@@ -172,12 +172,13 @@ public class ArregloInventario {
 
   /**
    * Este metodo muestra un producto por descripcion
+   *
    * @param descripcion del producto a buscar
    */
   public void mostrarPorDescripcion(String descripcion) {
     for (int i = 0; i < p1.size(); i++) {
-      producto1=p1.get(i);
-      if(producto1.getDescripcion().equalsIgnoreCase(descripcion)){
+      producto1 = p1.get(i);
+      if (producto1.getDescripcion().equalsIgnoreCase(descripcion)) {
         System.out.println(p1.get(i));
       }
     }
@@ -188,8 +189,8 @@ public class ArregloInventario {
    */
   public void mostrarPorClave(int clave) {
     for (int i = 0; i < p1.size(); i++) {
-      producto1=p1.get(i);
-      if (producto1.getClave() == clave){
+      producto1 = p1.get(i);
+      if (producto1.getClave() == clave) {
         System.out.println(p1.get(i));
       }
     }
@@ -198,24 +199,43 @@ public class ArregloInventario {
   /**
    * Este metodo ordenara por clave el inventario
    */
-  public void ordenarClave(){
-    
+  public void ordenarClave() {
+    Collections.sort(p1, new Comparator<Producto>() {
+      @Override
+      public int compare(Producto o1, Producto o2) {
+        //Se pone asi porque el metodo getClave regresa un primitivo y no hay ningun metodo de compare definido para primitivos
+        return Integer.compare(o1.getClave(), o2.getClave());
+      }
+    });
+    imprimirArreglo();
   }
-  
+
   /**
    * Este metodo ordenara por nombre el inventario
    */
-  public void ordenarNombre(){
-    
+  public void ordenarNombre() {
+    Collections.sort(p1, new Comparator<Producto>() {
+      @Override
+      public int compare(Producto o1, Producto o2) {
+        return o1.getNombre().compareTo(o2.getNombre());
+      }
+    });
+    imprimirArreglo();
   }
-  
+
   /**
    * Este metodo ordenara inventario por precio
    */
-  public void ordenarPrecio(){
-    
+  public void ordenarPrecio() {
+    Collections.sort(p1, new Comparator<Producto>() {
+      @Override
+      public int compare(Producto o1, Producto o2) {
+        return Double.compare(o1.getPrecioventa(), o2.getPrecioventa());
+      }
+    });
+    imprimirArreglo();
   }
-  
+
   /**
    * Este metodo es para mostrar el arreglo completo
    */
@@ -224,38 +244,39 @@ public class ArregloInventario {
       System.out.println(p1.get(i));
     }
   }
-  
- /**
-  * Este metodo eliminara un objeto del array
-  * @param clave indicara la clave del objeto a eliminar
-  */
-  public void eliminarElemento(int clave){
-    for(int i=0;i<p1.size();i++){
-       producto1=p1.get(i);
-       if(producto1.getClave()==clave){
-         p1.remove(i);
-         //ver si debo agregar otro array e ir guardando la informacion
-         //guardarP();
-         System.out.println("El producto ha sido eliminado con exito ");
-       }else{
-         System.out.println("La clave no esta en el inventario.");
-         break;
-       }
+
+  /**
+   * Este metodo eliminara un objeto del array
+   *
+   * @param clave indicara la clave del objeto a eliminar
+   */
+  public void eliminarElemento(int clave) {
+    for (int i = 0; i < p1.size(); i++) {
+      producto1 = p1.get(i);
+      if (producto1.getClave() == clave) {
+        p1.remove(i);
+        //ver si debo agregar otro array e ir guardando la informacion
+        //guardarP();
+        System.out.println("El producto ha sido eliminado con exito ");
+      } else {
+        System.out.println("La clave no esta en el inventario.");
+        break;
+      }
     }
     imprimirArreglo();
   }
 
   /**
-   * Este metodo es para cargar los datos del array
-   * Se hizo estatico porque creaba problemas de arrays vacios y por lo tanto no guardaba nada
+   * Este metodo es para cargar los datos del array Se hizo estatico porque creaba problemas de
+   * arrays vacios y por lo tanto no guardaba nada
    */
   public static void cargarP() {
     p1 = arch.recuperarDatosP();
   }
 
   /**
-   * Este metodo es guardar los cambios al array
-   * Se hizo estatico porque creaba problemas de arrays vacios y por lo tanto no guardaba nada
+   * Este metodo es guardar los cambios al array Se hizo estatico porque creaba problemas de arrays
+   * vacios y por lo tanto no guardaba nada
    */
   public static void guardarP() {
     arch.guardarObjetoP();

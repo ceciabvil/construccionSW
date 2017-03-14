@@ -98,7 +98,7 @@ public class Menu {
         System.out.println("Seleccione la opcion a realizar.");
         System.out.println("1) Inventario ordenado por clave. ");
         System.out.println("2) Inventario ordenado por nombre. ");
-        System.out.println("3) Inventario ordenado por nombre.");
+        System.out.println("3) Inventario ordenado por precio de venta.");
         try {
           num = t.leerEntero();
           if (num == 1) {

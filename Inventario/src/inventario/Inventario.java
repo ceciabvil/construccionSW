@@ -16,6 +16,7 @@ public class Inventario {
    */
   public static void main(String[] args) {
     // TODO code application logic here
+    
    ArregloInventario a1=new ArregloInventario();
    // a1.cargarP();
     Menu menu=new Menu();
