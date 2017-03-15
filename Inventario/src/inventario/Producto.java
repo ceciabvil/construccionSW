@@ -18,11 +18,8 @@ public class Producto implements Serializable {
   private double precioCompra;
   private double precioVenta;
   private double precioIVA;
-  private double precioTotal;
-  private double precioTotalVendido;
   private String tipoUnidad;
   private int existencia;
-  private int ventaProducto=0;
 
   /**
    * Se inicializan las variables de producto
@@ -34,11 +31,8 @@ public class Producto implements Serializable {
     precioCompra=0;
     precioVenta=0;
     precioIVA=0;
-    precioTotal=0;
-    precioTotalVendido=0;
     tipoUnidad=" ";
     existencia=0;
-    ventaProducto=0;
     
   }
 
@@ -46,7 +40,7 @@ public class Producto implements Serializable {
    * Se inicializan las variables de producto ahora ya con valor
    */
   public Producto(int clave, String nombre, String descripcion, double precioCompra,
-      int existencia, String tipoUnidad, double precioVenta, double precioIVA, int ventaProducto, double precioTotal, double precioTotalVendido) {
+      int existencia, String tipoUnidad, double precioVenta, double precioIVA) {
     this.clave = clave;
     this.nombre = nombre;
     this.descripcion = descripcion;
@@ -55,13 +49,6 @@ public class Producto implements Serializable {
     this.tipoUnidad = tipoUnidad;
     this.precioVenta = precioVenta;
     this.precioIVA = precioIVA;
-    this.ventaProducto=ventaProducto;
-    this.precioTotal=precioTotal;
-    this.precioTotalVendido=precioTotalVendido;
-  }
-
-  public double getPrecioTotalVendido(){
-    return precioTotalVendido;
   }
   
   public String getNombre() {
@@ -96,9 +83,6 @@ public class Producto implements Serializable {
     return precioIVA;
   }
 
-  public int getVentaProducto(){
-    return ventaProducto;
-  }
   public void setNombre(String nombre) {
     this.nombre = nombre;
   }
@@ -131,14 +115,6 @@ public class Producto implements Serializable {
     this.clave = clave;
   }
   
-  public void setVentaProducto(int ventaProducto){
-    this.ventaProducto=ventaProducto;
-  }
-  
-  public void setPrecioTotalVendido(double precioTotalVendido){
-    this.precioTotalVendido=precioTotalVendido;
-  }
-
   /**
    * Este metodo permite llamar todos los atributos en una sola funcion. El stringbuilder permite
    * almacenar caracteres de forma indexada (con un orden).

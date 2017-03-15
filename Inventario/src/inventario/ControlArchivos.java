@@ -16,7 +16,7 @@ import java.util.*;
 public class ControlArchivos {
 
   public static ArrayList<Producto> p1 = new ArrayList<Producto>();
-  public static ArrayList<Producto> arrayVenta = new ArrayList<Producto>();
+  public static ArrayList<Venta> arrayVenta = new ArrayList<Venta>();
 
   /**
    * Este metodo guardara el array list en el objeto.
@@ -69,7 +69,7 @@ public class ControlArchivos {
   public static ArrayList recuperarVenta() {
     try {
       ObjectInputStream in = new ObjectInputStream(new FileInputStream("arch2.txt"));
-      arrayVenta=(ArrayList<Producto>)in.readObject();
+      arrayVenta=(ArrayList<Venta>)in.readObject();
       in.close();
     } catch (java.io.IOException|ClassNotFoundException e) {
       System.out.println("Error al recuperar ventas registradas");
