@@ -299,9 +299,8 @@ public class ArregloInventario {
             if (opcion == 1) {
               int nuevaExistencia = (producto1.getExistencia() - cantidad);
               producto1.setExistencia(nuevaExistencia);
-              agregarProductoVenta(producto1,cantidad);
+              agregarVenta(producto1,cantidad);
               guardarP();
-              guardarV();
               System.out.println("Venta realizada con exito.");
               System.out.println("Cantidad de productos: " + cantidad+"  "+ producto1.getTipoUnidad());
               System.out.println("El precio con IVA ES: " + producto1.getPrecioIVA());
@@ -316,14 +315,39 @@ public class ArregloInventario {
     }
   }
   
+  /**
+   * Este metodo agregara ventas verificando si el objeto ya esta agregado o no en el inventario ventas
+   * @param producto ingresa el objeto producto como parametro 
+   * @param cantidad cantidad de objetos vendidos
+   */
+  public void agregarVenta(Producto p, int cantidad){
+    if(arrayVenta.size()==0){
+      agregarProductoVenta(p,cantidad);
+    }else{
+    for(int i=1;i<=arrayVenta.size();i++){
+      if(p.getClave()==venta.getClave()){
+        System.out.println("Ingresa la fecha de ingreso de la venta: ");
+        t.lineaBlanco();
+        String fecha=t.leerString();
+        venta.setFecha(fecha);
+        venta.setTotalVendidos(venta.getTotalVendidos()+cantidad);
+        guardarV();
+        System.out.println("El total de productos vendidos ha sido modificado.");
+        break;
+      }else if(i==arrayVenta.size() && p.getClave() != venta.getClave()){
+        agregarProductoVenta(p,cantidad);
+      }
+    }
+  }
+  }
 /**
  * Metodo para agregar un producto al inventari de ventas 
  * @param producto 
  * @param cantidad 
  */
   public void agregarProductoVenta(Producto p, int cantidad){
-    Venta venta=new Venta();
     System.out.println("Ingresa la fecha de ingreso de la venta: ");
+    t.lineaBlanco();
     String fecha=t.leerString();
     //Se agrega el producto al array 
     arrayVenta.add(venta);
